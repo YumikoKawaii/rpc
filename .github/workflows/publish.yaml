@@ -46,7 +46,7 @@ jobs:
         chmod +x "/usr/local/bin/buf"
         buf --version
 
-    - name: Generate Go code with buf
+    - name: Generate
       run: |
         cd definitions
         buf dep update
@@ -60,7 +60,7 @@ jobs:
         token: ${{ secrets.PAT_TOKEN }}
         path: target
 
-    - name: Copy generated files
+    - name: Publish
       run: |
         mkdir -p target/protobuf
         if [ -d "definitions/rpc.com/proto" ] && [ "$(ls -A definitions/rpc.com/proto)" ]; then
@@ -69,15 +69,8 @@ jobs:
           echo "No generated files found in definitions/rpc.com/proto"
           exit 1
         fi
-
-#    - name: Update Go dependencies
-#      run: |
-#        cd target
-#        go mod tidy
-
-    - name: Commit and push
-      run: |
         cd target
+        go mod tidy
         git config user.name "YumikoKawaii"
         git config user.email "yumiko.stl@gmail.com"
         git add .
