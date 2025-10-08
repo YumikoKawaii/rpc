@@ -1,7 +1,7 @@
 version: v1
 plugins:
 - name: gofast
-  out: pb
+  out: yumiko_kawaii.rpc.com
   opt:
   - Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types
   - Mgoogle/protobuf/any.protos=github.com/gogo/protobuf/types
