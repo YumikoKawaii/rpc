@@ -26,4 +26,5 @@ message EntryRequest {
 message EntryResponse {
   int32 code = 1;
   string message = 2;
+  int32 data = 3;
 }
