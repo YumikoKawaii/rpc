@@ -63,10 +63,10 @@ jobs:
     - name: Copy generated files
       run: |
         mkdir -p target/protobuf
-        if [ -d "definitions/rpc.com" ] && [ "$(ls -A definitions/rpc.com)" ]; then
-          cp -r definitions/rpc.com/* target/protobuf/
+        if [ -d "definitions/rpc.com/proto" ] && [ "$(ls -A definitions/rpc.com/proto)" ]; then
+          cp -r definitions/rpc.com/proto/* target/protobuf/
         else
-          echo "No generated files found in definitions/rpc.com"
+          echo "No generated files found in definitions/rpc.com/proto"
           exit 1
         fi
 
