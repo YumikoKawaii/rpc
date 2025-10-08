@@ -1,27 +1,26 @@
 version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/YumikoKawaii/rpc.com
 plugins:
-- local: protoc-gen-gofast
-  out: rpc.com
-  opt:
-  - Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types
-  - Mgoogle/protobuf/any.protos=github.com/gogo/protobuf/types
-  - Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types
-  - Mgoogle/protobuf/struct.proto=github.com/gogo/protobuf/types
-  - Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types
-  - Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types
-  - paths=source_relative
-- local: protoc-gen-go-grpc
-  out: rpc.com
-  opt:
-  - paths=source_relative
-- local: protoc-gen-grpc-gateway
-  out: rpc.com
-  opt:
-  - allow_repeated_fields_in_body=true
-  - paths=source_relative
-  - allow_delete_body=true
-- local: protoc-gen-validate
-  out: rpc.com
-  opt:
-  - paths=source_relative
-  - lang=go
+  - local: protoc-gen-go
+    out: rpc.com
+    opt:
+      - paths=source_relative
+  - local: protoc-gen-go-grpc
+    out: rpc.com
+    opt:
+      - paths=source_relative
+  - local: protoc-gen-grpc-gateway
+    out: rpc.com
+    opt:
+      - allow_repeated_fields_in_body=true
+      - paths=source_relative
+      - allow_delete_body=true
+  - local: protoc-gen-validate
+    out: rpc.com
+    opt:
+      - paths=source_relative
+      - lang=go
