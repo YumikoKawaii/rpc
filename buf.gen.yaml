@@ -1,7 +1,7 @@
 version: v1
 plugins:
 - name: gofast
-  out: yumiko_kawaii.rpc.com
+  out: rpc.com
   opt:
   - Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types
   - Mgoogle/protobuf/any.protos=github.com/gogo/protobuf/types
@@ -11,16 +11,16 @@ plugins:
   - Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types
   - paths=source_relative
 - name: go-grpc
-  out: pb
+  out: rpc.com
   opt: paths=source_relative
 - name: grpc-gateway
-  out: pb
+  out: rpc.com
   opt:
   - allow_repeated_fields_in_body=true
   - paths=source_relative
   - allow_delete_body=true
 - name: validate
-  out: pb
+  out: rpc.com
   opt:
   - paths=source_relative
   - lang=go
