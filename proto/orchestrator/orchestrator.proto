@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package orchestrator.api;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "yumiko_kawaii.com/yine/applications/orchestrator/api;api";
+
+// Orchestrator ...
+service Orchestrator {
+
+  rpc Entry(EntryRequest) returns (EntryResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/entry"
+      body: "*"
+    };
+  }
+}
+
+message EntryRequest {
+  string current_session = 1;
+  string previous_session = 2;
+}
+
+message EntryResponse {
+  int32 code = 1;
+  string message = 2;
+}
