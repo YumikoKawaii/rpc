@@ -70,10 +70,10 @@ jobs:
           exit 1
         fi
 
-    - name: Update Go dependencies
-      run: |
-        cd target
-        go mod tidy
+#    - name: Update Go dependencies
+#      run: |
+#        cd target
+#        go mod tidy
 
     - name: Commit and push
       run: |
