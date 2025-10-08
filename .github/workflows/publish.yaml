@@ -5,62 +5,64 @@ on:
     branches: [master]
 
 env:
-  PROTOC_LINUX_VERSION: 3.11.4
-  BUF_VERSION: 1.6.0
+  PROTOC_VERSION: 28.3
+  BUF_VERSION: 1.47.2
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout proto repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: definitions
 
     - name: Setup Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v5
       with:
-        go-version: '1.24'
+        go-version: '1.24.0'
 
     - name: Install protoc
       run: |
-        PROTOC_LINUX_ZIP=protoc-${PROTOC_LINUX_VERSION}-linux-x86_64.zip
-        curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_LINUX_VERSION}/${PROTOC_LINUX_ZIP}
-        sudo unzip -o ${PROTOC_LINUX_ZIP} -d /usr/local bin/protoc
-        sudo unzip -o ${PROTOC_LINUX_ZIP} -d /usr/local 'include/*'
-        rm -f ${PROTOC_LINUX_ZIP}
+        PROTOC_ZIP=protoc-${PROTOC_VERSION}-linux-x86_64.zip
+        curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/${PROTOC_ZIP}
+        sudo unzip -o ${PROTOC_ZIP} -d /usr/local bin/protoc
+        sudo unzip -o ${PROTOC_ZIP} -d /usr/local 'include/*'
+        rm -f ${PROTOC_ZIP}
+        protoc --version
 
     - name: Install protoc-gen plugins
       run: |
-        go install github.com/golang/protobuf/protoc-gen-go@v1.4.3
-        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.0.1
-        go install github.com/envoyproxy/protoc-gen-validate@v0.4.1
-        go install github.com/gogo/protobuf/protoc-gen-gofast@v1.3.1
-        go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.14.7
+        go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+        go install github.com/envoyproxy/protoc-gen-validate@latest
 
     - name: Install buf
       run: |
-        BUF_BINARY_NAME=buf
-        sudo curl -sSL "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/${BUF_BINARY_NAME}-$(uname -s)-$(uname -m)" -o "/usr/local/bin/${BUF_BINARY_NAME}"
-        sudo chmod +x "/usr/local/bin/${BUF_BINARY_NAME}"
+        curl -sSL "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-$(uname -s)-$(uname -m)" \
+          -o "/usr/local/bin/buf"
+        chmod +x "/usr/local/bin/buf"
+        buf --version
 
     - name: Generate Go code with buf
       run: |
         cd definitions
+        buf dep update
+        buf build
         buf generate
 
     - name: Checkout generated code repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        repository: YumikoKawaii/yumiko_kawaii.rpc.com
+        repository: YumikoKawaii/rpc.com
         token: ${{ secrets.PAT_TOKEN }}
         path: target
 
     - name: Copy generated files
       run: |
-        # Create protobuf directory if it doesn't exist                
         mkdir -p target/protobuf
-        # Copy generated files (use find to handle empty directories gracefully)
         if [ -d "definitions/rpc.com" ] && [ "$(ls -A definitions/rpc.com)" ]; then
           cp -r definitions/rpc.com/* target/protobuf/
         else
