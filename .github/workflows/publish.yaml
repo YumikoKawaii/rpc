@@ -74,5 +74,9 @@ jobs:
         git config user.name "YumikoKawaii"
         git config user.email "yumiko.stl@gmail.com"
         git add .
+        DATE=$(date +%Y%m%d)
+        TIME=$(date +%H%M%S)
+        VERSION="v0.0.${DATE}${TIME}"        
         git diff --quiet && git diff --staged --quiet || git commit -m "rpc version: ${{ github.sha }}"
+        git tag -a "$VERSION" -m "rpc version: ${{ github.sha }}"
         git push
