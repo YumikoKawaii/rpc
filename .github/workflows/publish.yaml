@@ -69,14 +69,31 @@ jobs:
           echo "No generated files found in definitions/rpc.com/proto"
           exit 1
         fi
+        
         cd target
         go mod tidy
+        
         git config user.name "YumikoKawaii"
         git config user.email "yumiko.stl@gmail.com"
         git add .
+        
+        # Check if there are changes
+        if git diff --quiet && git diff --staged --quiet; then
+          echo "No changes to commit, skipping tag creation"
+          exit 0
+        fi
+        
+        # Create version
         DATE=$(date +%Y%m%d)
         TIME=$(date +%H%M%S)
-        VERSION="v0.0.${DATE}${TIME}"        
-        git diff --quiet && git diff --staged --quiet || git commit -m "rpc version: ${{ github.sha }}"
+        VERSION="v0.0.${DATE}${TIME}"
+        
+        # Commit changes
+        git commit -m "rpc version: ${{ github.sha }}"
+        
+        # Create and push tag
         git tag -a "$VERSION" -m "rpc version: ${{ github.sha }}"
         git push
+        git push origin "$VERSION"
+        
+        echo "✅ Published version $VERSION"
