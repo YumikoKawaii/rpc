@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package orchestrator;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "orchestrator/prototypes/api;api";
+
+// Message ...
+message Message {
+  string message_id = 1;
+  string from_user_id = 2;
+  string to_user_id = 3;
+  string content = 4;
+  MessageType type = 5;
+  int64 timestamp = 6;
+  MessageStatus status = 7;
+  string conversation_id = 8; // optional, for group chats
+}
+
+// Enums
+enum MessageType {
+  TEXT = 0;
+  IMAGE = 1;
+  VIDEO = 2;
+  AUDIO = 3;
+  FILE = 4;
+  LOCATION = 5;
+}
+
+enum MessageStatus {
+  SENT = 0;
+  DELIVERED = 1;
+  READ = 2;
+  FAILED = 3;
+}
