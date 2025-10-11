@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package orchestrator.api;
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "orchestrator/prototypes.proto";
+
+option go_package = "yumiko_kawaii.com/yine/applications/orchestrator/streamer/api;api";
+
+// Streamer ...
+service Streamer {
+  // ReceiveMessages - Client receives real-time messages (server streaming)
+  rpc ReceiveMessages(ReceiveMessagesRequest) returns (stream Message);
+}
+// ReceiveMessages request
+message ReceiveMessagesRequest {
+  string user_id = 1 [(validate.rules).string.min_len = 1];
+  string session_token = 2; // for authentication
+}
