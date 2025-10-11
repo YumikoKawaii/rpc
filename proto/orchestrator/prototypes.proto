@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package orchestrator.api;
+package orchestrator;
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
-option go_package = "yumiko_kawaii.com/yine/applications/orchestrator/prototypes/api;api";
+option go_package = "yumiko_kawaii.com/rpc.com/orchestrator/prototypes/api";
 
 // Message ...
 message Message {

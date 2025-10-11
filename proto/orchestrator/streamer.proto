@@ -1,11 +1,12 @@
 syntax = "proto3";
 
-package orchestrator.api;
+package orchestrator;
+
 import "google/api/annotations.proto";
 import "validate/validate.proto";
-import "orchestrator/prototypes.proto";
+import "proto/orchestrator/prototypes.proto";
 
-option go_package = "yumiko_kawaii.com/yine/applications/orchestrator/streamer/api;api";
+option go_package = "yumiko_kawaii.com/rpc.com/orchestrator/streamer/api;api";
 
 // Streamer ...
 service Streamer {
