@@ -5,7 +5,7 @@ package orchestrator;
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
-option go_package = "orchestrator/prototypes/api;api";
+option go_package = "orchestrator/api;api";
 
 // Message ...
 message Message {

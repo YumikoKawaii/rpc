@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "validate/validate.proto";
 import "proto/orchestrator/prototypes.proto";
 
-option go_package = "orchestrator/receiver/api;api";
+option go_package = "orchestrator/api;api";
 
 // Receiver ...
 service Receiver {

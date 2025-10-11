@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "validate/validate.proto";
 import "proto/orchestrator/prototypes.proto";
 
-option go_package = "orchestrator/streamer/api;api";
+option go_package = "orchestrator/api;api";
 
 // Streamer ...
 service Streamer {
