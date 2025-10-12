@@ -15,6 +15,5 @@ service Streamer {
 }
 // ReceiveMessages request
 message ReceiveMessagesRequest {
-  string user_id = 1 [(validate.rules).string.min_len = 1];
-  string session_token = 2; // for authentication
+  string user_identification = 1 [(validate.rules).string.min_len = 1];
 }
