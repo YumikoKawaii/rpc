@@ -21,11 +21,10 @@ service Receiver {
 
 // SendMessage request
 message SendMessageRequest {
-  string from_user_id = 1 [(validate.rules).string.min_len = 1];
-  string to_user_id = 2 [(validate.rules).string.min_len = 1];
+  string sender = 1 [(validate.rules).string.min_len = 1];
+  string conversation_id = 2 [(validate.rules).string.min_len = 1];
   string content = 3 [(validate.rules).string.min_len = 1];
   MessageType type = 4;
-  string conversation_id = 5; // optional, for group chats
 }
 
 message SendMessageResponse {
