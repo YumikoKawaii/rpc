@@ -22,7 +22,7 @@ service Receiver {
 // SendMessage request
 message SendMessageRequest {
   string sender = 1 [(validate.rules).string.min_len = 1];
-  string conversation_id = 2 [(validate.rules).string.min_len = 1];
+  int64 conversation_id = 2;
   string content = 3 [(validate.rules).string.min_len = 1];
   MessageType type = 4;
 }
