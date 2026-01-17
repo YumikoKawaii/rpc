@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package authenticator;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "authenticator/api;api";
+
+// Authenticator ...
+service Authenticator {
+  rpc InitSignUp(InitSignUpRequest) returns (InitSignUpResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/signup/init"
+      body: "*"
+    };
+  }
+
+  rpc SignUp(SignUpRequest) returns (SignUpResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/signup"
+      body: "*"
+    };
+  }
+}
+
+message InitSignUpRequest {
+  string phone = 1;
+}
+
+message InitSignUpResponse {
+  int32 code = 1;
+  string message = 2;
+  message Data {
+    string flow_id = 3;
+  }
+}
+
+message SignUpRequest {
+  string flow_id = 1;
+  string otp = 2;
+}
+
+message SignUpResponse {
+  int32 code = 1;
+  string message = 2;
+  Data data = 3;
+
+  message Data {
+    string token = 1;
+  }
+}
