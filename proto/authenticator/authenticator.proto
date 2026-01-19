@@ -28,6 +28,12 @@ service Authenticator {
       get: "/api/v1/login/facebook/init"
     };
   }
+
+  rpc HandleFacebookCallback(HandleFacebookCallbackRequest) returns (HandleFacebookCallbackResponse) {
+    option (google.api.http) = {
+      get: "api/v1/facebook/callback"
+    };
+  }
 }
 
 message InitSignUpRequest {
@@ -67,4 +73,32 @@ message InitFacebookLoginResponse {
   message Data {
     string redirect_url = 1;
   }
+}
+
+message HandleFacebookCallbackRequest {
+  string code = 1;
+  string state = 2;
+
+  string error = 3;
+  string error_description = 4;
+  string error_reason = 5;
+
+  string cookie_header = 6;
+}
+
+message HandleFacebookCallbackResponse {
+  bool success = 1;
+  string redirect_url = 2; // Where to redirect user after auth
+  repeated Cookie session_cookies = 3; // Cookies to set in browser
+  string error_message = 4;
+}
+
+message Cookie {
+  string name = 1;
+  string value = 2;
+  string path = 3;
+  string domain = 4;
+  int64 max_age = 5;
+  bool secure = 6;
+  bool http_only = 7;
 }
