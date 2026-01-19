@@ -30,9 +30,9 @@ service Authenticator {
   }
 
   rpc HandleFacebookCallback(HandleFacebookCallbackRequest) returns (HandleFacebookCallbackResponse) {
-    option (google.api.http) = {
-      get: "/self-service/methods/oidc/callback/facebook"
-    };
+//    option (google.api.http) = {
+//      get: "/self-service/methods/oidc/callback/facebook"
+//    };
   }
 }
 
