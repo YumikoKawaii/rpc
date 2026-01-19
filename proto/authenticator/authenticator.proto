@@ -72,7 +72,7 @@ message InitFacebookLoginResponse {
   Data data = 3;
   message Data {
     string redirect_url = 1;
-    string cookie = 2;
+    repeated string cookies = 2;
   }
 }
 
