@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package health;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "health/api;api";
+
+// Health ...
+service Health {
+  rpc Readiness(ReadinessRequest) returns (ReadinessResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/health/readiness"
+    };
+  }
+
+  rpc Liveness(LivenessRequest) returns (LivenessResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/health/liveness"
+    };
+  }
+}
+
+message ReadinessRequest {}
+
+message ReadinessResponse {
+  bool ready = 1;
+  string message = 2;
+  int64 timestamp = 3;
+}
+
+message LivenessRequest {}
+
+message LivenessResponse {
+  bool alive = 1;
+  string message = 2;
+  int64 timestamp = 4;
+}
