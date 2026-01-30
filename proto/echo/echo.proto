@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package echo;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "echo/api;api";
+
+// Echo ...
+service Echo {
+  rpc Charge(ChargeRequest) returns (ChargeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/charge"
+      body: "*"
+    };
+  }
+
+  rpc Discharge(DischargeRequest) returns (DischargeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/discharge"
+      body: "*"
+    };
+  }
+}
+
+message ChargeRequest {}
+
+message ChargeResponse {}
+
+message DischargeRequest {}
+
+message DischargeResponse {}
