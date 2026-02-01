@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package acoustics;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "acoustics/api;api";
+
+// Acoustics ...
+service Acoustics {
+  rpc Entry(EntryRequest) returns (EntryResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/entry"
+      body: "*"
+    };
+  }
+}
+
+message EntryRequest {}
+
+message EntryResponse {}
