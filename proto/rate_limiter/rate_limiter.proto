@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package rate_limiter;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "rate_limiter/api;api";
+
+// RateLimiter ...
+service RateLimiter {
+  rpc ServeTokens(ServeTokensRequest) returns (ServeTokensResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/tokens"
+      body: "*"
+    };
+  }
+
+  rpc Status(StatusRequest) returns (StatusResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/status"
+    };
+  }
+}
+
+message ServeTokensRequest {
+  string ip = 1;
+  int32 quantity = 2;
+}
+
+message ServeTokensResponse {
+  int32 quantity = 1;
+  float rps = 2;
+}
+
+message StatusRequest {}
+
+message StatusResponse {
+  string leader_ip = 1;
+  string ip = 2;
+  float rps = 3;
+}
