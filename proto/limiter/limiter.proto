@@ -38,4 +38,5 @@ message StatusResponse {
   string leader_ip = 1;
   string ip = 2;
   float rps = 3;
+  int32 burst = 4;
 }
