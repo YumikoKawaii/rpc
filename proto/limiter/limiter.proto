@@ -16,6 +16,13 @@ service Limiter {
     };
   }
 
+  rpc Unregister(UnregisterRequest) returns (UnregisterResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/unregister"
+      body: "*"
+    };
+  }
+
   rpc Status(StatusRequest) returns (StatusResponse) {
     option (google.api.http) = {
       get: "/api/v1/status"
@@ -31,6 +38,12 @@ message CapacityResponse {
   double rps = 1;
   int32 burst = 2;
 }
+
+message UnregisterRequest {
+  string ip = 1;
+}
+
+message UnregisterResponse {}
 
 message StatusRequest {}
 
