@@ -1,17 +1,17 @@
 syntax = "proto3";
 
-package rate_limiter;
+package limiter;
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
-option go_package = "rate_limiter/api;api";
+option go_package = "limiter/api;api";
 
-// RateLimiter ...
-service RateLimiter {
-  rpc ServeTokens(ServeTokensRequest) returns (ServeTokensResponse) {
+// Limiter ...
+service Limiter {
+  rpc Capacity(CapacityRequest) returns (CapacityResponse) {
     option (google.api.http) = {
-      post: "/api/v1/tokens"
+      post: "/api/v1/capacity"
       body: "*"
     };
   }
@@ -23,14 +23,13 @@ service RateLimiter {
   }
 }
 
-message ServeTokensRequest {
+message CapacityRequest {
   string ip = 1;
-  int32 quantity = 2;
 }
 
-message ServeTokensResponse {
-  int32 quantity = 1;
-  float rps = 2;
+message CapacityResponse {
+  double rps = 1;
+  int32 burst = 2;
 }
 
 message StatusRequest {}
